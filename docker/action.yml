@@ -1,6 +1,6 @@
-name: Build and push a docker container
-description: This actions builds a multiarch docker container, and pushes it to docker hub.
-author: Netfloex
+name: Build and push a Docker container
+description: This actions builds a multiarch Docker container, and pushes it to Docker hub.
+author: Guusvanmeerveld
 inputs:
     username:
         required: true
@@ -22,7 +22,7 @@ inputs:
     file:
         required: false
         description: Path to the dockerfile
-    content:
+    context:
         required: false
         description: Docker build context
 
