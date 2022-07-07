@@ -1,0 +1,59 @@
+name: Build and push a docker container
+description: This actions builds a multiarch docker container, and pushes it to docker hub.
+author: Netfloex
+inputs:
+    username:
+        required: true
+        description: Username of docker hub
+    token:
+        required: true
+        description: Access token or password
+    tags:
+        required: true
+        description: Username Repo and tag, user/repo:tag
+    platforms:
+        required: false
+        description: Platforms used in docker/build-push-action and docker/setup-qemu-action
+        default: linux/amd64,linux/arm64,linux/arm/v7
+    push:
+        required: false
+        description: Should it push the container to docker hub?
+        default: true
+    file:
+        required: false
+        description: Path to the dockerfile
+    content:
+        required: false
+        description: Docker build context
+
+runs:
+    using: composite
+    steps:
+        # Setup
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v1.2.0
+          with:
+              platforms: ${{ inputs.platforms }}
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1.6.0
+
+        # Login
+        - name: Login to DockerHub
+          uses: docker/login-action@v1.10.0
+          with:
+              username: ${{ inputs.username }}
+              password: ${{ inputs.token }}
+
+        # Build & Push
+        - name: Build Dockerfile and push
+          uses: docker/build-push-action@v2.7.0
+          with:
+              push: ${{ inputs.push }}
+              tags: ${{ inputs.tags }}
+              platforms: ${{ inputs.platforms }}
+              file: ${{ inputs.file }}
+              context: ${{ inputs.context }}
+              # Cache
+              cache-from: type=gha
+              cache-to: type=gha,mode=max
