@@ -3,10 +3,10 @@ description: This actions builds a multiarch Docker container, and pushes it to 
 author: Guusvanmeerveld
 inputs:
     username:
-        required: true
+        required: false
         description: Username of docker hub
     token:
-        required: true
+        required: false
         description: Access token or password
     tags:
         required: true
