@@ -17,7 +17,7 @@ inputs:
         default: linux/amd64,linux/arm64,linux/arm/v7
     outputs:
         required: false
-        description: Where the image outputted will go
+        description: Where the outputted image will go
         default: type=registry
     push:
         required: false
@@ -58,6 +58,7 @@ runs:
               platforms: ${{ inputs.platforms }}
               file: ${{ inputs.file }}
               context: ${{ inputs.context }}
+              outputs: ${{ inputs.outputs }}
               # Cache
               cache-from: type=gha
               cache-to: type=gha,mode=max
