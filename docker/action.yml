@@ -15,6 +15,10 @@ inputs:
         required: false
         description: Platforms used in docker/build-push-action and docker/setup-qemu-action
         default: linux/amd64,linux/arm64,linux/arm/v7
+    outputs:
+        required: false
+        description: Where the image outputted will go
+        default: type=registry
     push:
         required: false
         description: Should it push the container to docker hub?
